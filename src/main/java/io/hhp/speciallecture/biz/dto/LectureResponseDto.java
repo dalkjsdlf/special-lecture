@@ -16,8 +16,9 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 @NoArgsConstructor(force = true)
 public class LectureResponseDto {
-    private final String name;
-    private final String desc;
+    private final Long id;
+    private final String lectureName;
+    private final String lectureDesc;
     private final LocalDateTime startDate;
     private final LocalDateTime endDate;
 }

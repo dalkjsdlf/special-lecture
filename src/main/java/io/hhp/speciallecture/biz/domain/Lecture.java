@@ -10,7 +10,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "LECTURE",
         indexes = {
-                @Index(columnList = "NAME"),
+                @Index(columnList = "LECTURE_NAME"),
                 @Index(columnList = "START_DATE")
         }
 )
@@ -21,12 +21,12 @@ public class Lecture {
     private Long id;
 
     @Setter()
-    @Column(name = "NAME", nullable = false, length = 100)
-    private String name;
+    @Column(name = "LECTURE_NAME", nullable = false, length = 100)
+    private String lectureName;
 
     @Setter()
-    @Column(name = "DESC", nullable = true, length = 1000)
-    private String desc;
+    @Column(name = "LECTURE_DESC", nullable = true, length = 1000)
+    private String lectureDesc;
 
     @Setter()
     @Column(name = "START_DATE", nullable = false)
@@ -38,15 +38,15 @@ public class Lecture {
 
     protected Lecture (){};
 
-    private Lecture(String name, String desc, LocalDateTime startDate, LocalDateTime endDate) {
-        this.name = name;
-        this.desc = desc;
+    private Lecture(String lectureName, String lectureDesc, LocalDateTime startDate, LocalDateTime endDate) {
+        this.lectureName = lectureName;
+        this.lectureDesc = lectureDesc;
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
-    public Lecture of(String name, String desc, LocalDateTime startDate, LocalDateTime endDate){
-        return new Lecture(name, desc, startDate, endDate);
+    public Lecture of(String lectureName, String lectureDesc, LocalDateTime startDate, LocalDateTime endDate){
+        return new Lecture(lectureName, lectureDesc, startDate, endDate);
     }
 
     @Override

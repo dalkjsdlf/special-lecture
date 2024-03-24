@@ -5,6 +5,8 @@ import io.hhp.speciallecture.biz.dto.LectureRegResponseDto;
 import io.hhp.speciallecture.biz.dto.LectureResponseDto;
 import io.hhp.speciallecture.biz.service.ILectureRegService;
 import io.hhp.speciallecture.biz.service.LectureRegService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +19,8 @@ import java.util.List;
 
 public class LectureRegController {
 
-    ILectureRegService lectureRegService;
+    private static Logger logger = LoggerFactory.getLogger(LectureRegController.class);
+    private final ILectureRegService lectureRegService;
 
     public LectureRegController(@Autowired ILectureRegService lectureRegService) {
         this.lectureRegService = lectureRegService;
@@ -25,7 +28,9 @@ public class LectureRegController {
 
     @PostMapping()
     public ResponseEntity<LectureRegResponseDto> registerForLecture(@RequestBody LectureRegRequestDto lectureRegRequestDto){
+
         LectureRegResponseDto lectureRegResponseDto = lectureRegService.registerForLecture(lectureRegRequestDto);
+        logger.info("lectureRegResponseDto [{}]",lectureRegResponseDto);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(lectureRegResponseDto);
     }

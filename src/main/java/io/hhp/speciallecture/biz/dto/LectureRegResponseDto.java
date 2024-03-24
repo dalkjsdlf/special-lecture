@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @NoArgsConstructor(force = true)
 public class LectureRegResponseDto {
+    private final Long id;
     private final Long LectureId;
     private final Long userId;
 }

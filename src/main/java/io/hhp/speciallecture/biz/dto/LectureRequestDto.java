@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 @NoArgsConstructor(force = true)
 public class LectureRequestDto {
-    private final String name;
-    private final String desc;
+    private final String lectureName;
+    private final String lectureDesc;
     private final LocalDateTime startDate;
     private final LocalDateTime endDate;
 }

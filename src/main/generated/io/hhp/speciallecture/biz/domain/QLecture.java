@@ -19,13 +19,13 @@ public class QLecture extends EntityPathBase<Lecture> {
 
     public static final QLecture lecture = new QLecture("lecture");
 
-    public final StringPath desc = createString("desc");
-
     public final DateTimePath<java.time.LocalDateTime> endDate = createDateTime("endDate", java.time.LocalDateTime.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final StringPath name = createString("name");
+    public final StringPath lectureDesc = createString("lectureDesc");
+
+    public final StringPath lectureName = createString("lectureName");
 
     public final DateTimePath<java.time.LocalDateTime> startDate = createDateTime("startDate", java.time.LocalDateTime.class);
 

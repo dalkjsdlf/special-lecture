@@ -2,8 +2,12 @@ package io.hhp.speciallecture.controller;
 
 import com.google.gson.Gson;
 import io.hhp.speciallecture.biz.controller.LectureRegController;
+import io.hhp.speciallecture.biz.dto.LectureRegRequestDto;
+import io.hhp.speciallecture.biz.dto.LectureRegResponseDto;
 import io.hhp.speciallecture.biz.service.ILectureRegService;
 import io.hhp.speciallecture.common.exception.ApiControllerAdvice;
+import io.hhp.speciallecture.stub.LectureRegServiceStub;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,9 +20,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doReturn;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("특강 관리 테스트")
@@ -49,18 +56,66 @@ public class LectureRegControllerTest {
         this.lectureRegService = lectureRegService;
     }
 
-    @DisplayName("")
+    @DisplayName("null 검사")
+    @Test()
+    public void givenNothing_whenCheckNull_thenNotNull(){
+        // given
+
+        // when
+
+        // then
+        assertThat(lectureRegController).isNotNull();
+        assertThat(lectureRegService).isNotNull();
+    }
+
+    @DisplayName("[성공] 특강신청")
     @Test()
     public void givenUrlUserIdAndLectureId_whenGetRegister_thenSuccessfullyRegister() throws Exception {
         // given
-        String url = "/api/register";
+        String url = "/api/lecture/register";
+        Long lectureRegId = 1L;
         Long userId = 1L;
         Long lectureId = 1L;
-        // when
-        ResultActions resultActions = mockMvc.perform(get(url).contentType(MediaType.APPLICATION_JSON));
 
+        //요청 DTO객체 생성
+        LectureRegRequestDto req = getLectureRegReqDto(userId,lectureId);
+
+        //응답 DTO객체 생성
+        LectureRegResponseDto res = getLectureRegResDto(lectureRegId, userId,lectureId);
+
+        LectureRegServiceStub lectureRegService = new LectureRegServiceStub();
+
+        // 결과값 세팅
+        lectureRegService.setReturn(getLectureRegResDto(lectureRegId,userId,lectureId));
+
+        //요청 DTO객체 등록요청하면 가짜 응답 DTO 반환
+        lectureRegController =  new LectureRegController(lectureRegService);
+
+
+        // when
+        ResultActions resultActions = mockMvc
+                .perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(gson.toJson(req)));
 
         // then
-        resultActions.andExpect(status().isOk());
+        resultActions.andExpect(status().isCreated());
+    }
+
+    private LectureRegRequestDto getLectureRegReqDto(Long userId, Long lectureId){
+        return LectureRegRequestDto
+                .builder()
+                .userId(userId)
+                .LectureId(lectureId)
+                .build();
+    }
+
+    private LectureRegResponseDto getLectureRegResDto(Long id, Long userId, Long lectureId){
+        return LectureRegResponseDto
+                .builder()
+                .id(id)
+                .userId(userId)
+                .LectureId(lectureId)
+                .build();
     }
 }
