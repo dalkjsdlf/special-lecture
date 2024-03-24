@@ -2,7 +2,7 @@ package io.hhp.speciallecture.biz.service;
 
 import io.hhp.speciallecture.biz.dto.LectureRegRequestDto;
 import io.hhp.speciallecture.biz.dto.LectureRegResponseDto;
-import io.hhp.speciallecture.biz.repository.ILectureRegPository;
+import io.hhp.speciallecture.biz.repository.ILectureRegRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class LectureRegService implements ILectureRegService{
 
-    ILectureRegPository lectureRegPository;
+    ILectureRegRepository lectureRegPository;
 
 
     @Override
