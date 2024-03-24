@@ -1,0 +1,45 @@
+debug: false
+management:
+  endpoints:
+    web:
+      exposure:
+        exclude: "*"
+
+server:
+  port: 8400
+
+logging:
+  level:
+    io.hhp.speciallecture : debug
+    org.springframework.web.servlet: debug
+    org.hibernate.type.descriptor.sql.internal: trace
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/lecture
+    username: dorris
+    password: dusghchl3891
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    defer-datasource-initialization: true
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        hibernate.default_batch_fetch_size: 100
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database: mysql
+  sql:
+    init:
+      mode: always
+  data:
+    rest:
+      base-path: /api
+      detection-strategy: annotated
+  thymeleaf3:
+    decoupled-logic: true
+
+
+
