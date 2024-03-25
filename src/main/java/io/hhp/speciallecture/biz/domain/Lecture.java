@@ -45,7 +45,7 @@ public class Lecture {
         this.endDate = endDate;
     }
 
-    public Lecture of(String lectureName, String lectureDesc, LocalDateTime startDate, LocalDateTime endDate){
+    public static Lecture of(String lectureName, String lectureDesc, LocalDateTime startDate, LocalDateTime endDate){
         return new Lecture(lectureName, lectureDesc, startDate, endDate);
     }
 

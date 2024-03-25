@@ -8,7 +8,7 @@ import java.util.List;
 public interface ILectureRegService {
 
     public LectureRegResponseDto registerForLecture(LectureRegRequestDto lectureRegRequestDto);
-    public LectureRegResponseDto getIsRegisterForLectureByUserId(Long userId);
+    public List<LectureRegResponseDto> getRegisterForLectureByUserId(Long userId);
     public List<LectureRegResponseDto> getAllRegisterForLecture();
 
 }

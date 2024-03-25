@@ -23,9 +23,8 @@ public class LectureRepository implements ILectureRepository{
     }
 
     @Override
-    public Lecture findById(Long id) {
-        Optional<Lecture> optionLecture = lectureOrmRepository.findById(id);
-        return null;
+    public Optional<Lecture> findById(Long id) {
+        return lectureOrmRepository.findById(id);
     }
 
     @Override

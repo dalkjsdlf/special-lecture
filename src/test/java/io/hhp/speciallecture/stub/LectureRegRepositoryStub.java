@@ -6,7 +6,9 @@ import io.hhp.speciallecture.biz.repository.ILectureRegRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class LectureRegRepositoryStub implements ILectureRegRepository {
 
@@ -19,22 +21,28 @@ public class LectureRegRepositoryStub implements ILectureRegRepository {
     }
 
     @Override
-    public LectureReg findByUserId(Long userId) {
+    public List<LectureReg> findByUserId(Long userId) {
         List<LectureReg> tableList = new ArrayList<>(table.values());
 
         //userId로 조회
-        for(LectureReg lectureReg : tableList){
-            if(lectureReg.getUserId().equals(userId)){
-                return lectureReg;
-            }
-        }
+        return tableList.stream().filter(item->item.getUserId().equals(userId)).collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<LectureReg> findByUserIdAndLectureId(Long userId, Long lectureId) {
         return null;
     }
 
     @Override
-    public LectureReg findById(Long id) {
-        return table.get(id);
+    public Optional<LectureReg> findById(Long id) {
+        return null;
     }
+
+    @Override
+    public Integer countByLectureId(Long lectureId) {
+        return 0;
+    }
+
 
     @Override
     public LectureReg save(LectureReg lectureReg) {

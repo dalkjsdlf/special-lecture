@@ -25,12 +25,13 @@ public class LectureRegServiceStub implements ILectureRegService {
     }
 
     @Override
-    public LectureRegResponseDto getIsRegisterForLectureByUserId(Long userId) {
-        return null;
+    public List<LectureRegResponseDto> getRegisterForLectureByUserId(Long userId) {
+        return lectureRegResponseDtoList;
     }
+
 
     @Override
     public List<LectureRegResponseDto> getAllRegisterForLecture() {
-        return null;
+        return lectureRegResponseDtoList;
     }
 }

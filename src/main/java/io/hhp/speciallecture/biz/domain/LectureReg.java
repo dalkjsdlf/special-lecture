@@ -30,7 +30,7 @@ public class LectureReg {
         this.userId = userId;
     }
 
-    public LectureReg of(Long lectureId, long userId){
+    public static LectureReg of(Long lectureId, long userId){
         return new LectureReg(lectureId, userId);
     }
 

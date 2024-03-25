@@ -36,9 +36,10 @@ public class LectureRegController {
     }
 
     @GetMapping("{userId}")
-    public ResponseEntity<LectureRegResponseDto> getIsRegisterForLectureByUserId(
+    public ResponseEntity<List<LectureRegResponseDto>> getIsRegisterForLectureByUserId(
             @PathVariable(name ="userId")Long userId){
-        return ResponseEntity.ok(lectureRegService.getIsRegisterForLectureByUserId(userId));
+        return ResponseEntity.ok(lectureRegService.getRegisterForLectureByUserId(userId));
+
     }
 
     @GetMapping()

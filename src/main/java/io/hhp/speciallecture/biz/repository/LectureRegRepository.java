@@ -3,7 +3,9 @@ package io.hhp.speciallecture.biz.repository;
 import io.hhp.speciallecture.biz.domain.LectureReg;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class LectureRegRepository implements ILectureRegRepository{
 
@@ -19,14 +21,27 @@ public class LectureRegRepository implements ILectureRegRepository{
     }
 
     @Override
-    public LectureReg findByUserId(Long userId) {
-        return lectureRegRepository.findByUserId(userId);
+    public List<LectureReg> findByUserId(Long userId) {
+        return new ArrayList<LectureReg>();
     }
 
     @Override
-    public LectureReg findById(Long id) {
+    public Optional<LectureReg> findByUserIdAndLectureId(Long userId, Long lectureId) {
+
+        return Optional.of(LectureReg.of(lectureId,userId));
+    }
+
+
+    @Override
+    public Optional<LectureReg> findById(Long id) {
         return lectureRegRepository.findById(id);
     }
+
+    @Override
+    public Integer countByLectureId(Long lectureId) {
+        return 0;
+    }
+
 
     @Override
     public LectureReg save(LectureReg lectureReg) {

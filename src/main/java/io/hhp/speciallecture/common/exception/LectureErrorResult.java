@@ -13,7 +13,9 @@ public enum LectureErrorResult {
     NUM_OF_PEOPLE_EXCEED(HttpStatus.BAD_REQUEST,"The number of people has been exceeded."),
     WRONG_USER_ID(HttpStatus.BAD_REQUEST,"The ID was entered incorrectly."),
     WRONG_STARTE_DATE(HttpStatus.BAD_REQUEST,"The date of start lecture was entered incorrectly."),
-    UNKNOWN_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "Unknown Exception"),;
+    UNKNOWN_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "Unknown Exception"),
+    WRONG_LECTURE_ID(HttpStatus.BAD_REQUEST,"The LectureId was entered incorrectly"),;
+    ;
 
     private final HttpStatus httpStatus;
     private final String message;
