@@ -9,9 +9,11 @@ import io.hhp.speciallecture.biz.repository.ILectureRepository;
 import io.hhp.speciallecture.common.exception.LectureErrorResult;
 import io.hhp.speciallecture.common.exception.LectureException;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -99,6 +101,11 @@ public class LectureRegService implements ILectureRegService{
          * 수강신청
          */
         LectureReg result = lectureRegRepository.save(LectureReg.of(lectureId,userId));
+
+        int incNumOfStudents = lecture.getNumOfStudents() + 1;
+        lecture.setNumOfStudents(incNumOfStudents);
+
+        lectureRepository.save(lecture);
 
         return convertLectureRegToResDto(result.getId(), result.getUserId(), result.getLectureId());
     }

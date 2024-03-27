@@ -43,10 +43,10 @@ public class LectureRegOrmRepositoryTest {
         /**
          * 테스트 데이터 입력
          * */
-        lectureRegOrmRepository.save(LectureReg.of(1L,1L));
-        lectureRegOrmRepository.save(LectureReg.of(2L,1L));
-        lectureRegOrmRepository.save(LectureReg.of(3L,1L));
-        lectureRegOrmRepository.save(LectureReg.of(3L,2L));
+        lectureRegOrmRepository.save(LectureReg.of(1L,1L));  //id = 1
+        lectureRegOrmRepository.save(LectureReg.of(2L,1L));  //id = 2
+        lectureRegOrmRepository.save(LectureReg.of(3L,1L));  //id = 3
+        lectureRegOrmRepository.save(LectureReg.of(3L,2L));  //id = 4
 
         Long userId    = 1L;
         Long lectureId = 1L;
@@ -70,10 +70,10 @@ public class LectureRegOrmRepositoryTest {
         /**
          * 테스트 데이터 입력
          * */
-        lectureRegOrmRepository.save(LectureReg.of(1L,1L));
-        lectureRegOrmRepository.save(LectureReg.of(2L,1L));
-        lectureRegOrmRepository.save(LectureReg.of(3L,1L));
-        lectureRegOrmRepository.save(LectureReg.of(3L,2L));
+        lectureRegOrmRepository.save(LectureReg.of(1L,1L));  //id = 1
+        lectureRegOrmRepository.save(LectureReg.of(2L,1L));  //id = 2
+        lectureRegOrmRepository.save(LectureReg.of(3L,1L));  //id = 3
+        lectureRegOrmRepository.save(LectureReg.of(3L,2L));  //id = 4
 
         Long userId    = 1L;
 
@@ -92,10 +92,10 @@ public class LectureRegOrmRepositoryTest {
         /**
          * 테스트 데이터 입력
          * */
-        lectureRegOrmRepository.save(LectureReg.of(1L,1L));
-        lectureRegOrmRepository.save(LectureReg.of(2L,1L));
-        lectureRegOrmRepository.save(LectureReg.of(3L,1L));
-        lectureRegOrmRepository.save(LectureReg.of(3L,2L));
+        lectureRegOrmRepository.save(LectureReg.of(1L,1L));  //id = 1
+        lectureRegOrmRepository.save(LectureReg.of(2L,1L));  //id = 2
+        lectureRegOrmRepository.save(LectureReg.of(3L,1L));  //id = 3
+        lectureRegOrmRepository.save(LectureReg.of(3L,2L));  //id = 4
 
         Long userId    = 1L;
         Long lectureId = 2L;
@@ -106,7 +106,7 @@ public class LectureRegOrmRepositoryTest {
 
         //then
         assertThat(result).isNotNull();
-        assertThat(result.getId()).isEqualTo(1L);
+        assertThat(result.getId()).isEqualTo(2L);
         assertThat(result.getUserId()).isEqualTo(userId);
         assertThat(result.getLectureId()).isEqualTo(lectureId);
     }
@@ -119,10 +119,10 @@ public class LectureRegOrmRepositoryTest {
         /**
          * 테스트 데이터 입력
          * */
-        lectureRegOrmRepository.save(LectureReg.of(1L,1L));
-        lectureRegOrmRepository.save(LectureReg.of(2L,1L));
-        lectureRegOrmRepository.save(LectureReg.of(3L,1L));
-        lectureRegOrmRepository.save(LectureReg.of(3L,2L));
+        lectureRegOrmRepository.save(LectureReg.of(1L,1L));  //id = 1
+        lectureRegOrmRepository.save(LectureReg.of(2L,1L));  //id = 2
+        lectureRegOrmRepository.save(LectureReg.of(3L,1L));  //id = 3
+        lectureRegOrmRepository.save(LectureReg.of(3L,2L));  //id = 4
 
         Long userId    = 1L;
 
