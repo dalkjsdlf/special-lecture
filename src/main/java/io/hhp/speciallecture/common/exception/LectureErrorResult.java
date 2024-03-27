@@ -14,7 +14,8 @@ public enum LectureErrorResult {
     WRONG_USER_ID(HttpStatus.BAD_REQUEST,"The ID was entered incorrectly."),
     WRONG_STARTE_DATE(HttpStatus.BAD_REQUEST,"The date of start lecture was entered incorrectly."),
     UNKNOWN_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "Unknown Exception"),
-    WRONG_LECTURE_ID(HttpStatus.BAD_REQUEST,"The LectureId was entered incorrectly"),;
+    WRONG_LECTURE_ID(HttpStatus.BAD_REQUEST,"The LectureId was entered incorrectly"),
+    LECTURE_NOT_REGISTERED(HttpStatus.BAD_REQUEST,"The Lecture Not Registered by userId");
     ;
 
     private final HttpStatus httpStatus;

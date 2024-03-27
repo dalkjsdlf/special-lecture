@@ -25,6 +25,9 @@ import java.util.Optional;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 
+/**
+ * The type Lecture reg service.
+ */
 @Service
 @Transactional(readOnly = true)
 public class LectureRegService implements ILectureRegService{
@@ -36,6 +39,12 @@ public class LectureRegService implements ILectureRegService{
 
     private final Logger logger = LoggerFactory.getLogger(LectureRegService.class);
 
+    /**
+     * 특강 수강신청하는 서비스
+     *
+     * @param lectureRegRepository the lecture reg repository
+     * @param lectureRepository    the lecture repository
+     */
     public LectureRegService(@Autowired ILectureRegRepository lectureRegRepository,
                              @Autowired ILectureRepository lectureRepository) {
         this.lectureRegRepository = lectureRegRepository;
@@ -43,7 +52,6 @@ public class LectureRegService implements ILectureRegService{
     }
 
     @Transactional()
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Override
     public LectureRegResponseDto registerForLecture(LectureRegRequestDto lectureRegRequestDto) {
 
@@ -114,13 +122,16 @@ public class LectureRegService implements ILectureRegService{
         int incNumOfStudents = lecture.getNumOfStudents() + 1;
         lecture.setNumOfStudents(incNumOfStudents);
 
+        /*
+         * 수강인원 추가
+         */
         lectureRepository.save(lecture);
 
         return convertLectureRegToResDto(result.getId(), result.getUserId(), result.getLectureId());
     }
 
     @Override
-    public List<LectureRegResponseDto> getRegisterForLectureByUserId(Long userId) {
+    public LectureRegResponseDto checkIsRegisterForLectureByUserId(Long userId, Long lectureId) {
         /*
          * Validation Check
          * 아이디가 NULL이 아닌지 검사
@@ -129,15 +140,11 @@ public class LectureRegService implements ILectureRegService{
             throw new LectureException(LectureErrorResult.WRONG_USER_ID);
         }
 
-        List<LectureReg> lectureRegList = lectureRegRepository.findByUserId(userId);
+        Optional<LectureReg> optLectureRegList = lectureRegRepository.findByUserIdAndLectureId(userId,lectureId);
 
-        return convertLectureRegsToResDtoList(lectureRegList);
-    }
+        LectureReg lectureReg = optLectureRegList.orElseThrow(() -> new LectureException(LectureErrorResult.LECTURE_NOT_REGISTERED));
 
-
-    @Override
-    public List<LectureRegResponseDto> getAllRegisterForLecture() {
-        return null;
+        return convertLectureRegToResDto(lectureReg.getId(), lectureReg.getUserId(),lectureReg.getLectureId());
     }
 
     private LectureRegResponseDto convertLectureRegToResDto(Long id, Long userId, Long lectureId){

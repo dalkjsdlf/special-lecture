@@ -41,10 +41,8 @@ public class LectureRegRepository implements ILectureRegRepository{
 
     @Override
     public Integer countByLectureId(Long lectureId) {
-        return 0;
+        return lectureRegOrmRepository.countByLectureId(lectureId);
     }
-
-
     @Override
     public LectureReg save(LectureReg lectureReg) {
         return lectureRegOrmRepository.save(lectureReg);
