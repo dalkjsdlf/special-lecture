@@ -1,44 +1,135 @@
 package io.hhp.speciallecture.orm;
 
 import io.hhp.speciallecture.biz.domain.LectureReg;
-import io.hhp.speciallecture.biz.orm.ILectureOrmRepository;
 import io.hhp.speciallecture.biz.orm.ILectureRegOrmRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
+import java.util.Optional;
 
-import static org.antlr.v4.runtime.tree.xpath.XPath.findAll;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-@DisplayName("")
+@DisplayName("물리 DB 테스트")
 @DataJpaTest
 public class LectureRegOrmRepositoryTest {
 
-    ILectureRegOrmRepository lectureRegOrmRepository;
+    private final ILectureRegOrmRepository lectureRegOrmRepository;
+
+    private final Logger logger = LoggerFactory.getLogger(LectureRegOrmRepositoryTest.class);
 
     public LectureRegOrmRepositoryTest(@Autowired ILectureRegOrmRepository lectureRegOrmRepository) {
         this.lectureRegOrmRepository = lectureRegOrmRepository;
     }
 
-    @DisplayName("")
+    @DisplayName("Null Check")
     @Test
-    void given_when_then() {
+    void givenNothing_whenNullCheck_thenNullCheck() {
 
         assertThat(lectureRegOrmRepository).isNotNull();
     }
 
-    @DisplayName("")
+    @DisplayName("[성공] 수강등록 ID로 조회하기 단건조회")
     @Test
-    void given_whenFoundOne_then() {
+    void givenLectureRegId_whenFindById_thenLectureReg() {
 
-        LectureReg savedLectureReg = lectureRegOrmRepository.save(LectureReg.of(1L,1L));
+        //given
+        /**
+         * 테스트 데이터 입력
+         * */
+        lectureRegOrmRepository.save(LectureReg.of(1L,1L));
+        lectureRegOrmRepository.save(LectureReg.of(2L,1L));
+        lectureRegOrmRepository.save(LectureReg.of(3L,1L));
+        lectureRegOrmRepository.save(LectureReg.of(3L,2L));
 
-        List<LectureReg> resultList = lectureRegOrmRepository.findAll();
+        Long userId    = 1L;
+        Long lectureId = 1L;
 
-        assertThat(resultList.size()).isEqualTo(1);
+        //when
+        Optional<LectureReg> optResult = lectureRegOrmRepository.findById(1L);
+        LectureReg result = optResult.orElse(null);
+
+        //then
+        assertThat(result).isNotNull();
+        assertThat(result.getId()).isEqualTo(1L);
+        assertThat(result.getUserId()).isEqualTo(userId);
+        assertThat(result.getLectureId()).isEqualTo(lectureId);
+    }
+
+    @DisplayName("[성공] 사용자ID로 조회하기 다건조회")
+    @Test
+    void givenUserId_whenFindByUserId_thenLectureRegList() {
+
+        //given
+        /**
+         * 테스트 데이터 입력
+         * */
+        lectureRegOrmRepository.save(LectureReg.of(1L,1L));
+        lectureRegOrmRepository.save(LectureReg.of(2L,1L));
+        lectureRegOrmRepository.save(LectureReg.of(3L,1L));
+        lectureRegOrmRepository.save(LectureReg.of(3L,2L));
+
+        Long userId    = 1L;
+
+        //when
+        List<LectureReg> resultList = lectureRegOrmRepository.findByUserId(userId);
+
+        //then
+        assertThat(resultList).hasSize(3);
+    }
+
+    @DisplayName("[성공] 사용자ID와 특강ID로 조회하기 단건조회")
+    @Test
+    void givenUserIdAndLectureId_whenFindByUserIdAndLectureId_thenLectureReg() {
+
+        //given
+        /**
+         * 테스트 데이터 입력
+         * */
+        lectureRegOrmRepository.save(LectureReg.of(1L,1L));
+        lectureRegOrmRepository.save(LectureReg.of(2L,1L));
+        lectureRegOrmRepository.save(LectureReg.of(3L,1L));
+        lectureRegOrmRepository.save(LectureReg.of(3L,2L));
+
+        Long userId    = 1L;
+        Long lectureId = 2L;
+
+        //when
+        Optional<LectureReg> optResult = lectureRegOrmRepository.findByUserIdAndLectureId(userId,lectureId);
+        LectureReg result = optResult.orElse(null);
+
+        //then
+        assertThat(result).isNotNull();
+        assertThat(result.getId()).isEqualTo(1L);
+        assertThat(result.getUserId()).isEqualTo(userId);
+        assertThat(result.getLectureId()).isEqualTo(lectureId);
+    }
+
+    @DisplayName("[성공] 특강ID로 카운드하기")
+    @Test
+    void givenLectureId_whenFindByUserIdAndLectureId_thenCountValue() {
+
+        //given
+        /**
+         * 테스트 데이터 입력
+         * */
+        lectureRegOrmRepository.save(LectureReg.of(1L,1L));
+        lectureRegOrmRepository.save(LectureReg.of(2L,1L));
+        lectureRegOrmRepository.save(LectureReg.of(3L,1L));
+        lectureRegOrmRepository.save(LectureReg.of(3L,2L));
+
+        Long userId    = 1L;
+
+        //when
+        int result = lectureRegOrmRepository.countByUserId(userId);
+
+        //then
+        assertThat(result).isEqualTo(3);
     }
 }
