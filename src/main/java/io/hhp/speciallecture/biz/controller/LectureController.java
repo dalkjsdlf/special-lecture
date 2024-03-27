@@ -2,7 +2,6 @@ package io.hhp.speciallecture.biz.controller;
 
 import io.hhp.speciallecture.biz.dto.LectureResponseDto;
 import io.hhp.speciallecture.biz.service.ILectureService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

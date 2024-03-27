@@ -8,9 +8,13 @@ import io.hhp.speciallecture.biz.repository.ILectureRegRepository;
 import io.hhp.speciallecture.biz.repository.ILectureRepository;
 import io.hhp.speciallecture.common.exception.LectureErrorResult;
 import io.hhp.speciallecture.common.exception.LectureException;
+import jakarta.persistence.LockModeType;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -30,6 +34,8 @@ public class LectureRegService implements ILectureRegService{
 
     private final int CONST_NUM_OF_PEOPLE = 30;
 
+    private final Logger logger = LoggerFactory.getLogger(LectureRegService.class);
+
     public LectureRegService(@Autowired ILectureRegRepository lectureRegRepository,
                              @Autowired ILectureRepository lectureRepository) {
         this.lectureRegRepository = lectureRegRepository;
@@ -37,12 +43,15 @@ public class LectureRegService implements ILectureRegService{
     }
 
     @Transactional()
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Override
     public LectureRegResponseDto registerForLecture(LectureRegRequestDto lectureRegRequestDto) {
+
 
         Long lectureId = lectureRegRequestDto.getLectureId();
         Long userId    = lectureRegRequestDto.getUserId();
 
+        logger.info("USER_ID:[{}],    LECTURE_ID:[{}]",userId,lectureId);
         /*
          * Validation Check
          * 아이디가 NULL이 아닌지 검사

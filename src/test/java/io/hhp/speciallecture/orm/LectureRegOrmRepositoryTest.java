@@ -4,9 +4,6 @@ import io.hhp.speciallecture.biz.domain.LectureReg;
 import io.hhp.speciallecture.biz.orm.ILectureRegOrmRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
@@ -22,7 +19,10 @@ public class LectureRegOrmRepositoryTest {
 
     private final ILectureRegOrmRepository lectureRegOrmRepository;
 
-    private final Logger logger = LoggerFactory.getLogger(LectureRegOrmRepositoryTest.class);
+    /*
+    * Logger 필요할때만 사용하기
+    * */
+    //private final Logger logger = LoggerFactory.getLogger(LectureRegOrmRepositoryTest.class);
 
     public LectureRegOrmRepositoryTest(@Autowired ILectureRegOrmRepository lectureRegOrmRepository) {
         this.lectureRegOrmRepository = lectureRegOrmRepository;
@@ -40,7 +40,7 @@ public class LectureRegOrmRepositoryTest {
     void givenLectureRegId_whenFindById_thenLectureReg() {
 
         //given
-        /**
+        /*
          * 테스트 데이터 입력
          * */
         lectureRegOrmRepository.save(LectureReg.of(1L,1L));  //id = 1
@@ -67,7 +67,7 @@ public class LectureRegOrmRepositoryTest {
     void givenUserId_whenFindByUserId_thenLectureRegList() {
 
         //given
-        /**
+        /*
          * 테스트 데이터 입력
          * */
         lectureRegOrmRepository.save(LectureReg.of(1L,1L));  //id = 1
@@ -89,7 +89,7 @@ public class LectureRegOrmRepositoryTest {
     void givenUserIdAndLectureId_whenFindByUserIdAndLectureId_thenLectureReg() {
 
         //given
-        /**
+        /*
          * 테스트 데이터 입력
          * */
         lectureRegOrmRepository.save(LectureReg.of(1L,1L));  //id = 1
@@ -116,7 +116,7 @@ public class LectureRegOrmRepositoryTest {
     void givenLectureId_whenFindByUserIdAndLectureId_thenCountValue() {
 
         //given
-        /**
+        /*
          * 테스트 데이터 입력
          * */
         lectureRegOrmRepository.save(LectureReg.of(1L,1L));  //id = 1

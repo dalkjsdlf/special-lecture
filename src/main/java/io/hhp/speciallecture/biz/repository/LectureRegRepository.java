@@ -30,7 +30,7 @@ public class LectureRegRepository implements ILectureRegRepository{
     @Override
     public Optional<LectureReg> findByUserIdAndLectureId(Long userId, Long lectureId) {
 
-        return Optional.of(LectureReg.of(lectureId,userId));
+        return lectureRegOrmRepository.findByUserIdAndLectureId(userId, lectureId);
     }
 
 

@@ -1,17 +1,13 @@
 package io.hhp.speciallecture.orm;
 
 import io.hhp.speciallecture.biz.domain.Lecture;
-import io.hhp.speciallecture.biz.domain.LectureReg;
 import io.hhp.speciallecture.biz.orm.ILectureOrmRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,7 +19,10 @@ public class LectureOrmRepositoryTest {
 
     private final ILectureOrmRepository lectureOrmRepository;
 
-    private final Logger logger = LoggerFactory.getLogger(LectureOrmRepositoryTest.class);
+    /**
+     * Logger 필요할때만 사용
+     * */
+    //private final Logger logger = LoggerFactory.getLogger(LectureOrmRepositoryTest.class);
 
     public LectureOrmRepositoryTest(@Autowired ILectureOrmRepository lectureOrmRepository) {
         this.lectureOrmRepository = lectureOrmRepository;
@@ -41,7 +40,7 @@ public class LectureOrmRepositoryTest {
     void givenLectureId_whenFindById_thenLectureReg() {
 
         //given
-        /**
+        /*
          * 테스트 데이터 입력
          * */
         lectureOrmRepository.save(
@@ -51,9 +50,6 @@ public class LectureOrmRepositoryTest {
                 LocalDateTime.of(2024, 3, 20, 0, 0, 0),
                 LocalDateTime.of(2024, 3, 21, 0, 0, 0),
                         20));
-
-        Long userId    = 1L;
-        Long lectureId = 1L;
 
         //when
         Optional<Lecture> optResult = lectureOrmRepository.findById(1L);
@@ -70,7 +66,7 @@ public class LectureOrmRepositoryTest {
     void givenLectureId_whenUpdateCount_thenSuccessfullyUpdate() {
 
         //given
-        /**
+        /*
          * 테스트 데이터 입력
          * */
         lectureOrmRepository.save(
@@ -80,9 +76,6 @@ public class LectureOrmRepositoryTest {
                         LocalDateTime.of(2024, 3, 20, 0, 0, 0),
                         LocalDateTime.of(2024, 3, 21, 0, 0, 0),
                         20));
-
-        Long userId    = 1L;
-        Long lectureId = 1L;
 
         //when
         Optional<Lecture> optResult = lectureOrmRepository.findById(1L);
