@@ -11,7 +11,7 @@ import java.util.Objects;
 @Table(name = "LECTURE",
         indexes = {
                 @Index(columnList = "LECTURE_NAME"),
-                @Index(columnList = "START_DATE")
+                @Index(columnList = "REG_START_DATE")
         }
 )
 public class Lecture {
@@ -29,24 +29,29 @@ public class Lecture {
     private String lectureDesc;
 
     @Setter()
-    @Column(name = "START_DATE", nullable = false)
-    private LocalDateTime startDate;
+    @Column(name = "REG_START_DATE", nullable = false)
+    private LocalDateTime regStartDate;
 
     @Setter()
-    @Column(name = "END_DATE", nullable = false)
-    private LocalDateTime endDate;
+    @Column(name = "REG_END_DATE", nullable = false)
+    private LocalDateTime regEndDate;
+
+    @Setter
+    @Column(name = "NUM_OF_STUDENTS", nullable = false)
+    private int numOfStudents;
 
     protected Lecture (){};
 
-    private Lecture(String lectureName, String lectureDesc, LocalDateTime startDate, LocalDateTime endDate) {
+    private Lecture(String lectureName, String lectureDesc, LocalDateTime regStartDate, LocalDateTime regEndDate, int numOfStudents) {
         this.lectureName = lectureName;
         this.lectureDesc = lectureDesc;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.regStartDate = regStartDate;
+        this.regEndDate = regEndDate;
+        this.numOfStudents = numOfStudents;
     }
 
-    public static Lecture of(String lectureName, String lectureDesc, LocalDateTime startDate, LocalDateTime endDate){
-        return new Lecture(lectureName, lectureDesc, startDate, endDate);
+    public static Lecture of(String lectureName, String lectureDesc, LocalDateTime regStartDate, LocalDateTime regEndDate, int numOfStudents){
+        return new Lecture(lectureName, lectureDesc, regStartDate, regEndDate, numOfStudents);
     }
 
     @Override

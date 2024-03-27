@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+
+import java.time.LocalDateTime;
 /*
  * TODO 항목별 제약조건 추가해야함
  * */
@@ -15,5 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class LectureRegRequestDto {
     private final Long LectureId;
     private final Long userId;
+    private final LocalDateTime regStartDate;
+    private final LocalDateTime regEndDate;
 
 }

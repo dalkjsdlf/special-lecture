@@ -1,9 +1,11 @@
 package io.hhp.speciallecture.biz.repository;
 
 import io.hhp.speciallecture.biz.domain.Lecture;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+
 
 public interface ILectureRepository{
     public List<Lecture> findAll();

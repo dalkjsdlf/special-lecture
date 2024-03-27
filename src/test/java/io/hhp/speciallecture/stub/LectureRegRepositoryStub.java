@@ -52,12 +52,11 @@ public class LectureRegRepositoryStub implements ILectureRegRepository {
     }
 
     @Override
-    public LectureReg delete(Long id) {
-        LectureReg lectureReg = table.get(id);
-        if(lectureReg != null){
+    public void delete(LectureReg lectureReg) {
+        Long id = lectureReg.getId();
+        LectureReg foundLectureReg = table.get(id);
+        if(foundLectureReg != null){
             table.remove(id);
         }
-
-        return lectureReg;
     }
 }

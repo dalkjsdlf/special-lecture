@@ -60,7 +60,8 @@ public class LectureRegServiceTest {
         Optional<Lecture> lecture = Optional.of(Lecture.of("백엔드강의"
                 , "백엔드 능력을 배양하기 위한 강의"
                 , LocalDateTime.of(2024, 3, 20, 0, 0, 0)
-                , LocalDateTime.of(2024, 3, 28, 0, 0, 0)));
+                , LocalDateTime.of(2024, 3, 28, 0, 0, 0)
+                ,10));
 
         LectureRegRequestDto lectureRegRequestDto = getLectureRegReqDto(userId, lectureId);
 
@@ -125,7 +126,8 @@ public class LectureRegServiceTest {
         Optional<Lecture> lecture = Optional.of(Lecture.of("백엔드강의"
                 , "백엔드 능력을 배양하기 위한 강의"
                 , LocalDateTime.of(2024, 3, 20, 0, 0, 0)
-                , LocalDateTime.of(2024, 3, 28, 0, 0, 0)));
+                , LocalDateTime.of(2024, 3, 28, 0, 0, 0)
+                ,10));
         LectureRegRequestDto lectureRegRequestDto = getLectureRegReqDto(userId, lectureId);
 
         /*
@@ -156,7 +158,8 @@ public class LectureRegServiceTest {
         Optional<Lecture> lecture = Optional.of(Lecture.of("백엔드강의"
                 , "백엔드 능력을 배양하기 위한 강의"
                 , LocalDateTime.of(2024, 3, 20, 0, 0, 0)
-                , LocalDateTime.of(2024, 3, 28, 0, 0, 0)));
+                , LocalDateTime.of(2024, 3, 28, 0, 0, 0)
+                ,30));
         LectureRegRequestDto lectureRegRequestDto = getLectureRegReqDto(userId, lectureId);
 
         /*
@@ -192,7 +195,8 @@ public class LectureRegServiceTest {
         Optional<Lecture> lecture = Optional.of(Lecture.of("백엔드강의"
                 , "백엔드 능력을 배양하기 위한 강의"
                 , LocalDateTime.of(2024, 3, 20, 0, 0, 0)
-                , LocalDateTime.of(2024, 3, 21, 0, 0, 0)));
+                , LocalDateTime.of(2024, 3, 21, 0, 0, 0)
+                ,10));
         LectureRegRequestDto lectureRegRequestDto = getLectureRegReqDto(userId, lectureId);
 
         /*

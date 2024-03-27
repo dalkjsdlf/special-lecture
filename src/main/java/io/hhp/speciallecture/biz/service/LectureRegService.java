@@ -70,8 +70,8 @@ public class LectureRegService implements ILectureRegService{
          * 특강 마감일 비교
          */
         LocalDateTime today = LocalDateTime.now();
-        LocalDateTime startDate = lecture.getStartDate();
-        LocalDateTime endDate   = lecture.getEndDate();
+        LocalDateTime startDate = lecture.getRegStartDate();
+        LocalDateTime endDate   = lecture.getRegEndDate();
 
         if(startDate.isAfter(today) || endDate.isBefore(today)){
             throw new LectureException(LectureErrorResult.CANNOT_REGISTER_FOR_THE_PERIOD);

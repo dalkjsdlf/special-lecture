@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 
-@Component
+
 public interface ILectureRegRepository{
     public List<LectureReg> findAll();
     public List<LectureReg> findByUserId(Long userId);
@@ -18,5 +18,7 @@ public interface ILectureRegRepository{
     public Integer countByLectureId(Long lectureId);
 
     public LectureReg save(LectureReg lectureReg);
-    public LectureReg delete(Long id);
+
+    void delete(LectureReg lectureReg);
+
 }

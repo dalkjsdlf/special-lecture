@@ -1,23 +1,25 @@
 package io.hhp.speciallecture.biz.repository;
 
 import io.hhp.speciallecture.biz.domain.LectureReg;
+import io.hhp.speciallecture.biz.orm.ILectureRegOrmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+@Component
 public class LectureRegRepository implements ILectureRegRepository{
 
-    ILectureRegRepository lectureRegRepository;
+    ILectureRegOrmRepository lectureRegOrmRepository;
 
-    public LectureRegRepository(@Autowired ILectureRegRepository lectureRegRepository) {
-        this.lectureRegRepository = lectureRegRepository;
+    public LectureRegRepository(@Autowired ILectureRegOrmRepository lectureRegOrmRepository) {
+        this.lectureRegOrmRepository = lectureRegOrmRepository;
     }
 
     @Override
     public List<LectureReg> findAll() {
-        return lectureRegRepository.findAll();
+        return lectureRegOrmRepository.findAll();
     }
 
     @Override
@@ -34,7 +36,7 @@ public class LectureRegRepository implements ILectureRegRepository{
 
     @Override
     public Optional<LectureReg> findById(Long id) {
-        return lectureRegRepository.findById(id);
+        return lectureRegOrmRepository.findById(id);
     }
 
     @Override
@@ -45,11 +47,11 @@ public class LectureRegRepository implements ILectureRegRepository{
 
     @Override
     public LectureReg save(LectureReg lectureReg) {
-        return lectureRegRepository.save(lectureReg);
+        return lectureRegOrmRepository.save(lectureReg);
     }
 
     @Override
-    public LectureReg delete(Long id) {
-        return lectureRegRepository.delete(id);
+    public void delete(LectureReg lectureReg) {
+        lectureRegOrmRepository.delete(lectureReg);
     }
 }

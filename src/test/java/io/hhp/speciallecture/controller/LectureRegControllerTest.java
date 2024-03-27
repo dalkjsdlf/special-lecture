@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -70,16 +71,19 @@ public class LectureRegControllerTest {
         Long userId = 1L;
         Long lectureId = 1L;
 
+        LocalDateTime startDate = LocalDateTime.of(2024, 3, 20, 0, 0, 0);
+        LocalDateTime endDate = LocalDateTime.of(2024, 3, 20, 0, 0, 0);
+
         //요청 DTO객체 생성
-        LectureRegRequestDto req = getLectureRegReqDto(userId,lectureId);
+        LectureRegRequestDto req = getLectureRegReqDto(userId,lectureId,startDate,endDate);
 
         //응답 DTO객체 생성
-        LectureRegResponseDto res = getLectureRegResDto(lectureRegId, userId,lectureId);
+        LectureRegResponseDto res = getLectureRegResDto(lectureRegId, userId,lectureId,startDate,endDate);
 
         LectureRegServiceStub lectureRegService = new LectureRegServiceStub();
 
         // 결과값 세팅
-        lectureRegService.setReturn(getLectureRegResDto(lectureRegId,userId,lectureId));
+        lectureRegService.setReturn(getLectureRegResDto(lectureRegId,userId,lectureId,startDate,endDate));
 
         //요청 DTO객체 등록요청하면 가짜 응답 DTO 반환
         lectureRegController =  new LectureRegController(lectureRegService);
@@ -103,17 +107,19 @@ public class LectureRegControllerTest {
         Long lectureRegId = 1L;
         Long userId = 1L;
         Long lectureId = 1L;
+        LocalDateTime startDate = LocalDateTime.of(2024, 3, 20, 0, 0, 0);
+        LocalDateTime endDate = LocalDateTime.of(2024, 3, 20, 0, 0, 0);
 
         //요청 DTO객체 생성
-        LectureRegRequestDto req = getLectureRegReqDto(userId,lectureId);
+        LectureRegRequestDto req = getLectureRegReqDto(userId,lectureId,startDate,endDate);
 
         //응답 DTO객체 생성
-        LectureRegResponseDto res = getLectureRegResDto(lectureRegId, userId,lectureId);
+        LectureRegResponseDto res = getLectureRegResDto(lectureRegId, userId,lectureId,startDate,endDate);
 
         LectureRegServiceStub lectureRegService = new LectureRegServiceStub();
 
         // 결과값 세팅
-        lectureRegService.setReturnList(List.of(getLectureRegResDto(lectureRegId,userId,lectureId)));
+        lectureRegService.setReturnList(List.of(getLectureRegResDto(lectureRegId,userId,lectureId,startDate,endDate)));
 
         //요청 DTO객체 등록요청하면 가짜 응답 DTO 반환
         lectureRegController =  new LectureRegController(lectureRegService);
@@ -129,20 +135,24 @@ public class LectureRegControllerTest {
         //resultActions.andExpect(MockMvcResultMatchers.jsonPath("$[0].userId").value(userId));
     }
 
-    private LectureRegRequestDto getLectureRegReqDto(Long userId, Long lectureId){
+    private LectureRegRequestDto getLectureRegReqDto(Long userId, Long lectureId, LocalDateTime regStartDate, LocalDateTime regEndDate){
         return LectureRegRequestDto
                 .builder()
                 .userId(userId)
                 .LectureId(lectureId)
+                .regStartDate(regStartDate)
+                .regEndDate(regEndDate)
                 .build();
     }
 
-    private LectureRegResponseDto getLectureRegResDto(Long id, Long userId, Long lectureId){
+    private LectureRegResponseDto getLectureRegResDto(Long id, Long userId, Long lectureId, LocalDateTime regStartDate, LocalDateTime regEndDate){
         return LectureRegResponseDto
                 .builder()
                 .id(id)
                 .userId(userId)
                 .LectureId(lectureId)
+                .regStartDate(regStartDate)
+                .regEndDate(regEndDate)
                 .build();
     }
 }
