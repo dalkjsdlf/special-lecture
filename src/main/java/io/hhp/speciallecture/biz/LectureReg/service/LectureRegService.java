@@ -9,9 +9,11 @@ import io.hhp.speciallecture.biz.LectureReg.dto.LectureRegResponseDto;
 import io.hhp.speciallecture.biz.LectureReg.repository.ILectureRegRepository;
 import io.hhp.speciallecture.common.exception.LectureErrorResult;
 import io.hhp.speciallecture.common.exception.LectureException;
+import jakarta.persistence.LockModeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,8 +47,11 @@ public class LectureRegService implements ILectureRegService {
         this.lectureRegRepository = lectureRegRepository;
         this.lectureRepository = lectureRepository;
     }
-    @Transactional()
+
+
+    @Transactional
     @Override
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     public LectureRegResponseDto registerForLecture(LectureRegRequestDto lectureRegRequestDto) {
 
 
@@ -116,6 +121,7 @@ public class LectureRegService implements ILectureRegService {
         int incNumOfStudents = lecture.getNumOfStudents() + 1;
         lecture.setNumOfStudents(incNumOfStudents);
 
+        logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  userId [{}] ,    incNumOfStudents [{}] ",userId,incNumOfStudents);
         /*
          * 수강인원 추가
          */

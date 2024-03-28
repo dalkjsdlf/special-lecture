@@ -1,11 +1,13 @@
 package io.hhp.speciallecture.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import io.hhp.speciallecture.biz.LectureReg.controller.LectureRegController;
 import io.hhp.speciallecture.biz.LectureReg.dto.LectureRegRequestDto;
 import io.hhp.speciallecture.biz.LectureReg.dto.LectureRegResponseDto;
 import io.hhp.speciallecture.biz.LectureReg.service.LectureRegService;
 import io.hhp.speciallecture.common.exception.ApiControllerAdvice;
+import io.hhp.speciallecture.common.serialize.LocalDateTimeTypeAdapter;
 import io.hhp.speciallecture.stub.LectureRegServiceStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -44,7 +46,9 @@ public class LectureRegControllerTest {
     Gson gson;
     @BeforeEach
     void init(){
-        gson = new Gson();
+        gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
+                .create();
         mockMvc = MockMvcBuilders.standaloneSetup(lectureRegController)
                 .setControllerAdvice(new ApiControllerAdvice())
                 .build();
@@ -79,7 +83,7 @@ public class LectureRegControllerTest {
         LectureRegRequestDto req = getLectureRegReqDto(userId,lectureId,startDate,endDate);
 
         //응답 DTO객체 생성
-        LectureRegResponseDto res = getLectureRegResDto(lectureRegId, userId,lectureId,startDate,endDate);
+        LectureRegResponseDto res = getLectureRegResDto(lectureRegId, userId, lectureId, startDate, endDate);
 
         LectureRegServiceStub lectureRegService = new LectureRegServiceStub();
 
@@ -95,6 +99,8 @@ public class LectureRegControllerTest {
                 .perform(post(url)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(gson.toJson(req)));
+
+
 
         // then
         resultActions.andExpect(status().isCreated());
@@ -133,7 +139,6 @@ public class LectureRegControllerTest {
 
         // then
         resultActions.andExpect(status().isOk());
-        //resultActions.andExpect(MockMvcResultMatchers.jsonPath("$[0].userId").value(userId));
     }
 
     private LectureRegRequestDto getLectureRegReqDto(Long userId, Long lectureId, LocalDateTime regStartDate, LocalDateTime regEndDate){

@@ -10,6 +10,7 @@ import io.hhp.speciallecture.biz.LectureReg.repository.ILectureRegRepository;
 import io.hhp.speciallecture.biz.LectureReg.service.ILectureRegService;
 import io.hhp.speciallecture.common.exception.LectureErrorResult;
 import io.hhp.speciallecture.common.exception.LectureException;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -101,7 +102,6 @@ public class LectureRegServiceTotalTest {
     @Test()
     public void given10User_whenRegisterSimultaneously_thenSyncResult() throws InterruptedException {
         // given
-        logger.info("잘돼나요?");
         int threadCount = 10;
         ExecutorService executorService = Executors.newFixedThreadPool(26);
 
@@ -111,7 +111,7 @@ public class LectureRegServiceTotalTest {
         Lecture lecture = Lecture.of("백엔드강의"
                 , "백엔드 능력을 배양하기 위한 강의"
                 , LocalDateTime.of(2024, 3, 20, 0, 0, 0)
-                , LocalDateTime.of(2024, 3, 28, 0, 0, 0)
+                , LocalDateTime.of(2024, 4, 28, 0, 0, 0)
                 ,0);
 
         /*
@@ -120,26 +120,65 @@ public class LectureRegServiceTotalTest {
         Lecture savedLecture = lectureRepository.save(lecture);
         Long lectureId = savedLecture.getId();
 
+        Long userIdSeq = 1L;
         //when
         for (int i = 0; i < threadCount; i++) {
+            Long finalUserIdSeq = userIdSeq;
             executorService.submit(() -> {
                 try {
-                    Random random = new Random();
+                    logger.info("Thread ID [{}],   userId >>>[{}]",Thread.currentThread().getId(), finalUserIdSeq);
+                    Thread.sleep(500);
 
-
-                    random.setSeed(System.currentTimeMillis());
-                    Long userId2 = random.nextLong(100);
-                    logger.info("Thread ID [{}],   userId >>>[{}]",Thread.currentThread().getId(),userId2);
-
-                    LectureRegRequestDto lectureRegRequestDto = getLectureRegReqDto(userId2, lectureId);
+                    LectureRegRequestDto lectureRegRequestDto = getLectureRegReqDto(finalUserIdSeq, lectureId);
                     lectureRegService.registerForLecture(lectureRegRequestDto);
 
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 } finally {
                     latch.countDown();
                 }
             });
+            userIdSeq++;
         }
         latch.await();
+
+        Thread.sleep(2000);
+        Lecture resultLecture = lectureRepository.findById(lectureId).orElseThrow(() -> new LectureException(LectureErrorResult.NOT_FOUND_LECTURE));
+        List<LectureReg> lectureRegList = lectureRegRepository.findAll();
+        //then
+        assertThat(resultLecture.getId()).isEqualTo(lectureId);
+        assertThat(resultLecture.getNumOfStudents()).isEqualTo(10);
+        assertThat(lectureRegList.size()).isEqualTo(10);
+
+    }
+
+
+    @DisplayName("[성공] 여러 사용자가 동시에 수강신청하여도 순차처리됨")
+    @Test()
+    public void given10User_whenRegister_thenSyncResult() throws InterruptedException {
+        // given
+
+        AtomicReference<Long> userId = new AtomicReference<>(1L);
+        Lecture lecture = Lecture.of("백엔드강의"
+                , "백엔드 능력을 배양하기 위한 강의"
+                , LocalDateTime.of(2024, 3, 20, 0, 0, 0)
+                , LocalDateTime.of(2024, 4, 28, 0, 0, 0)
+                ,0);
+
+        /*
+         * 수강신청을 하기 위해서는 특강 정보가 등록되어있어야 한다.
+         **/
+        Lecture savedLecture = lectureRepository.save(lecture);
+        Long lectureId = savedLecture.getId();
+
+
+        Long userIdSy = 1L;
+        for(int i = 0 ; i < 10; i++){
+            LectureRegRequestDto lectureRegRequestDto = getLectureRegReqDto(userIdSy, lectureId);
+            lectureRegService.registerForLecture(lectureRegRequestDto);
+            userIdSy++;
+        }
+
         Lecture resultLecture = lectureRepository.findById(lectureId).orElseThrow(() -> new LectureException(LectureErrorResult.NOT_FOUND_LECTURE));
         List<LectureReg> lectureRegList = lectureRegRepository.findAll();
         //then
