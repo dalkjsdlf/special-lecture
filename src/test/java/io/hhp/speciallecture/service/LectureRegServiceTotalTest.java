@@ -142,7 +142,6 @@ public class LectureRegServiceTotalTest {
         }
         latch.await();
 
-        Thread.sleep(2000);
         Lecture resultLecture = lectureRepository.findById(lectureId).orElseThrow(() -> new LectureException(LectureErrorResult.NOT_FOUND_LECTURE));
         List<LectureReg> lectureRegList = lectureRegRepository.findAll();
         //then

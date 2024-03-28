@@ -3,7 +3,9 @@ package io.hhp.speciallecture.biz.Lecture.repository;
 
 import io.hhp.speciallecture.biz.Lecture.domain.Lecture;
 import io.hhp.speciallecture.biz.Lecture.orm.ILectureOrmRepository;
+import jakarta.persistence.LockModeType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -21,12 +23,11 @@ public class LectureRepository implements ILectureRepository {
     public List<Lecture> findAll() {
         return lectureOrmRepository.findAll();
     }
-
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Override
     public Optional<Lecture> findById(Long id) {
         return lectureOrmRepository.findById(id);
     }
-
     @Override
     public Lecture save(Lecture lecture) {
         return lectureOrmRepository.save(lecture);

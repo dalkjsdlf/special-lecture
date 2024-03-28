@@ -51,7 +51,6 @@ public class LectureRegService implements ILectureRegService {
 
     @Transactional
     @Override
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
     public LectureRegResponseDto registerForLecture(LectureRegRequestDto lectureRegRequestDto) {
 
 
