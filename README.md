@@ -1,5 +1,5 @@
 ## 항해플러스 CHAPTER 2-1 수강신청 프로젝트
-<img src="./iamge/ERD.png", height="200x", width="200px">
+<img src="./image/ERD.png", height="200x", width="200px">
 ---
 ## 설계문서
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/83c75a39-3aba-4ba4-a792-7aefe4b07895/348e5da8-5475-4958-9de4-4eb9a605fe14/Untitled.png)
