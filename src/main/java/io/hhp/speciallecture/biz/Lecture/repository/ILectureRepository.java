@@ -9,6 +9,9 @@ import java.util.Optional;
 public interface ILectureRepository{
     public List<Lecture> findAll();
     public Optional<Lecture> findById(Long id);
+
+    public Optional<Lecture> findByIdWithLock(Long id);
+
     public Lecture save(Lecture lecture);
     public Lecture update(Lecture lecture);
     public Lecture delete(Long id);

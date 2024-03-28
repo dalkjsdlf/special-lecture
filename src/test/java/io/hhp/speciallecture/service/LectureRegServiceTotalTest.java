@@ -21,7 +21,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -127,14 +126,10 @@ public class LectureRegServiceTotalTest {
             executorService.submit(() -> {
                 try {
                     logger.info("Thread ID [{}],   userId >>>[{}]",Thread.currentThread().getId(), finalUserIdSeq);
-                    Thread.sleep(500);
 
                     LectureRegRequestDto lectureRegRequestDto = getLectureRegReqDto(finalUserIdSeq, lectureId);
                     lectureRegService.registerForLecture(lectureRegRequestDto);
-
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                } finally {
+                }finally {
                     latch.countDown();
                 }
             });
@@ -152,7 +147,7 @@ public class LectureRegServiceTotalTest {
     }
 
 
-    @DisplayName("[성공] 여러 사용자가 동시에 수강신청하여도 순차처리됨")
+    @DisplayName("[성공] 여러 사용자가 순차적으로 수강신청하여 처리됨")
     @Test()
     public void given10User_whenRegister_thenSyncResult() throws InterruptedException {
         // given

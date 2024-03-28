@@ -15,12 +15,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static org.springframework.transaction.annotation.Isolation.*;
 
 /**
  * The type Lecture reg service.
@@ -56,8 +59,8 @@ public class LectureRegService implements ILectureRegService {
 
         Long lectureId = lectureRegRequestDto.getLectureId();
         Long userId    = lectureRegRequestDto.getUserId();
-
-        logger.info("USER_ID:[{}],    LECTURE_ID:[{}]",userId,lectureId);
+        logger.info("========================================================================================================================");
+        logger.info("1. 서비스 함수 진입 >>>>>>>> USER_ID:[{}],    LECTURE_ID:[{}]",userId,lectureId);
         /*
          * Validation Check
          * 아이디가 NULL이 아닌지 검사
@@ -78,9 +81,9 @@ public class LectureRegService implements ILectureRegService {
          * Validation Check
          * 특강이 존재하는지 검사
          */
-        Optional<Lecture> optionalLecture = lectureRepository.findById(lectureId);
+        Optional<Lecture> optionalLecture = lectureRepository.findByIdWithLock(lectureId);
         Lecture lecture = optionalLecture.orElseThrow(()-> new LectureException(LectureErrorResult.NOT_FOUND_LECTURE));
-
+        logger.info("3. 강의조회      >>>>>>>> USER_ID:[{}],    LECTURE_ID:[{}],     before Num of Students [{}]",userId,lectureId,lecture.getNumOfStudents());
         /*
          * Validation Check
          * 특강 시작일 비교
@@ -120,12 +123,13 @@ public class LectureRegService implements ILectureRegService {
         int incNumOfStudents = lecture.getNumOfStudents() + 1;
         lecture.setNumOfStudents(incNumOfStudents);
 
-        logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  userId [{}] ,    incNumOfStudents [{}] ",userId,incNumOfStudents);
+        logger.info("4. 수강생증가      >>>>>>>> USER_ID:[{}],    LECTURE_ID:[{}] ,    incNumOfStudents [{}]",userId,lectureId, incNumOfStudents);
+
         /*
          * 수강인원 추가
          */
         lectureRepository.save(lecture);
-
+        logger.info("========================================================================================================================");
         return convertLectureRegToResDto(result.getId(), result.getUserId(), result.getLectureId());
     }
 

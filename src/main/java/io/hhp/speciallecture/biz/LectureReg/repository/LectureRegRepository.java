@@ -4,6 +4,8 @@ package io.hhp.speciallecture.biz.LectureReg.repository;
 import io.hhp.speciallecture.biz.LectureReg.domain.LectureReg;
 import io.hhp.speciallecture.biz.LectureReg.orm.ILectureRegOrmRepository;
 import jakarta.persistence.LockModeType;
+import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Component;
@@ -14,7 +16,7 @@ import java.util.Optional;
 @Component
 public class LectureRegRepository implements ILectureRegRepository {
 
-    ILectureRegOrmRepository lectureRegOrmRepository;
+    private final ILectureRegOrmRepository lectureRegOrmRepository;
 
     public LectureRegRepository(@Autowired ILectureRegOrmRepository lectureRegOrmRepository) {
         this.lectureRegOrmRepository = lectureRegOrmRepository;
@@ -29,23 +31,21 @@ public class LectureRegRepository implements ILectureRegRepository {
     public List<LectureReg> findByUserId(Long userId) {
         return new ArrayList<LectureReg>();
     }
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Override
     public Optional<LectureReg> findByUserIdAndLectureId(Long userId, Long lectureId) {
         return lectureRegOrmRepository.findByUserIdAndLectureId(userId, lectureId);
     }
 
-
     @Override
     public Optional<LectureReg> findById(Long id) {
         return lectureRegOrmRepository.findById(id);
     }
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
+
     @Override
     public Integer countByLectureId(Long lectureId) {
         return lectureRegOrmRepository.countByLectureId(lectureId);
     }
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
+
     @Override
     public LectureReg save(LectureReg lectureReg) {
         return lectureRegOrmRepository.save(lectureReg);
