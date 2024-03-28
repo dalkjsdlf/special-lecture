@@ -1,7 +1,7 @@
 package io.hhp.speciallecture.orm;
 
-import io.hhp.speciallecture.biz.domain.LectureReg;
-import io.hhp.speciallecture.biz.orm.ILectureRegOrmRepository;
+import io.hhp.speciallecture.biz.LectureReg.domain.LectureReg;
+import io.hhp.speciallecture.biz.LectureReg.orm.ILectureRegOrmRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,6 +84,9 @@ public class LectureRegOrmRepositoryTest {
         assertThat(resultList).hasSize(3);
     }
 
+    /*
+     * USERID -> 1 LECTUREID 2를 찾아 반환
+     * */
     @DisplayName("[성공] 사용자ID와 특강ID로 조회하기 단건조회")
     @Test
     void givenUserIdAndLectureId_whenFindByUserIdAndLectureId_thenLectureReg() {
@@ -120,14 +123,14 @@ public class LectureRegOrmRepositoryTest {
          * 테스트 데이터 입력
          * */
         lectureRegOrmRepository.save(LectureReg.of(1L,1L));  //id = 1
-        lectureRegOrmRepository.save(LectureReg.of(2L,1L));  //id = 2
-        lectureRegOrmRepository.save(LectureReg.of(3L,1L));  //id = 3
-        lectureRegOrmRepository.save(LectureReg.of(3L,2L));  //id = 4
+        lectureRegOrmRepository.save(LectureReg.of(1L,2L));  //id = 2
+        lectureRegOrmRepository.save(LectureReg.of(1L,3L));  //id = 3
+        lectureRegOrmRepository.save(LectureReg.of(2L,2L));  //id = 4
 
         Long userId    = 1L;
 
         //when
-        int result = lectureRegOrmRepository.countByUserId(userId);
+        int result = lectureRegOrmRepository.countByLectureId(userId);
 
         //then
         assertThat(result).isEqualTo(3);

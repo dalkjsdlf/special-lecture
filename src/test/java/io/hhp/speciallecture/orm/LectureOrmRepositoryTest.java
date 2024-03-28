@@ -1,7 +1,7 @@
 package io.hhp.speciallecture.orm;
 
-import io.hhp.speciallecture.biz.domain.Lecture;
-import io.hhp.speciallecture.biz.orm.ILectureOrmRepository;
+import io.hhp.speciallecture.biz.Lecture.domain.Lecture;
+import io.hhp.speciallecture.biz.Lecture.orm.ILectureOrmRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

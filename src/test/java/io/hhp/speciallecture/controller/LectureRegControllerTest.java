@@ -1,10 +1,10 @@
 package io.hhp.speciallecture.controller;
 
 import com.google.gson.Gson;
-import io.hhp.speciallecture.biz.controller.LectureRegController;
-import io.hhp.speciallecture.biz.dto.LectureRegRequestDto;
-import io.hhp.speciallecture.biz.dto.LectureRegResponseDto;
-import io.hhp.speciallecture.biz.service.LectureRegService;
+import io.hhp.speciallecture.biz.LectureReg.controller.LectureRegController;
+import io.hhp.speciallecture.biz.LectureReg.dto.LectureRegRequestDto;
+import io.hhp.speciallecture.biz.LectureReg.dto.LectureRegResponseDto;
+import io.hhp.speciallecture.biz.LectureReg.service.LectureRegService;
 import io.hhp.speciallecture.common.exception.ApiControllerAdvice;
 import io.hhp.speciallecture.stub.LectureRegServiceStub;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static io.hhp.speciallecture.common.constants.WebApiConstants.USER_ID_HEADER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -72,7 +73,7 @@ public class LectureRegControllerTest {
         Long lectureId = 1L;
 
         LocalDateTime startDate = LocalDateTime.of(2024, 3, 20, 0, 0, 0);
-        LocalDateTime endDate = LocalDateTime.of(2024, 3, 20, 0, 0, 0);
+        LocalDateTime endDate = LocalDateTime.of(2024, 4, 20, 0, 0, 0);
 
         //요청 DTO객체 생성
         LectureRegRequestDto req = getLectureRegReqDto(userId,lectureId,startDate,endDate);
@@ -103,12 +104,12 @@ public class LectureRegControllerTest {
     @Test()
     public void givenUserId_whenGetLectureRegByUserID_thenGetListLectureReg() throws Exception {
         // given
-        String url = "/api/lecture/register";
+        String url = "/api/lecture/register/check/1";
         Long lectureRegId = 1L;
         Long userId = 1L;
         Long lectureId = 1L;
         LocalDateTime startDate = LocalDateTime.of(2024, 3, 20, 0, 0, 0);
-        LocalDateTime endDate = LocalDateTime.of(2024, 3, 20, 0, 0, 0);
+        LocalDateTime endDate = LocalDateTime.of(2024, 4, 20, 0, 0, 0);
 
         //요청 DTO객체 생성
         LectureRegRequestDto req = getLectureRegReqDto(userId,lectureId,startDate,endDate);
@@ -127,7 +128,7 @@ public class LectureRegControllerTest {
         // when
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
                 .get(url)
-                .param("userId","1")
+                .header(USER_ID_HEADER, "1")
                 .contentType(MediaType.APPLICATION_JSON));
 
         // then

@@ -1,8 +1,9 @@
 package io.hhp.speciallecture.stub;
 
-import io.hhp.speciallecture.biz.dto.LectureRegRequestDto;
-import io.hhp.speciallecture.biz.dto.LectureRegResponseDto;
-import io.hhp.speciallecture.biz.service.ILectureRegService;
+
+import io.hhp.speciallecture.biz.LectureReg.dto.LectureRegRequestDto;
+import io.hhp.speciallecture.biz.LectureReg.dto.LectureRegResponseDto;
+import io.hhp.speciallecture.biz.LectureReg.service.ILectureRegService;
 
 import java.util.List;
 
@@ -25,13 +26,7 @@ public class LectureRegServiceStub implements ILectureRegService {
     }
 
     @Override
-    public List<LectureRegResponseDto> getRegisterForLectureByUserId(Long userId) {
-        return lectureRegResponseDtoList;
-    }
-
-
-    @Override
-    public List<LectureRegResponseDto> getAllRegisterForLecture() {
-        return lectureRegResponseDtoList;
+    public LectureRegResponseDto checkIsRegisterForLectureByUserId(Long userId, Long lectureId) {
+        return null;
     }
 }

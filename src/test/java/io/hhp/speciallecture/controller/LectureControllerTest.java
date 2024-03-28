@@ -1,8 +1,8 @@
 package io.hhp.speciallecture.controller;
 
 import com.google.gson.Gson;
-import io.hhp.speciallecture.biz.controller.LectureController;
-import io.hhp.speciallecture.biz.service.ILectureService;
+import io.hhp.speciallecture.biz.Lecture.controller.LectureController;
+import io.hhp.speciallecture.biz.Lecture.service.ILectureService;
 import io.hhp.speciallecture.common.exception.ApiControllerAdvice;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

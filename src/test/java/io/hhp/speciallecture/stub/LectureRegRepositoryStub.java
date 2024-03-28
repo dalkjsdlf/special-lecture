@@ -1,7 +1,9 @@
 package io.hhp.speciallecture.stub;
 
-import io.hhp.speciallecture.biz.domain.LectureReg;
-import io.hhp.speciallecture.biz.repository.ILectureRegRepository;
+
+
+import io.hhp.speciallecture.biz.LectureReg.domain.LectureReg;
+import io.hhp.speciallecture.biz.LectureReg.repository.ILectureRegRepository;
 
 import java.util.ArrayList;
 import java.util.List;

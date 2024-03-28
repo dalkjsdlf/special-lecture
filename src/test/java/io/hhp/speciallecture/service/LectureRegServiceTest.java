@@ -1,12 +1,13 @@
 package io.hhp.speciallecture.service;
 
-import io.hhp.speciallecture.biz.domain.Lecture;
-import io.hhp.speciallecture.biz.domain.LectureReg;
-import io.hhp.speciallecture.biz.dto.LectureRegRequestDto;
-import io.hhp.speciallecture.biz.dto.LectureRegResponseDto;
-import io.hhp.speciallecture.biz.repository.LectureRegRepository;
-import io.hhp.speciallecture.biz.repository.LectureRepository;
-import io.hhp.speciallecture.biz.service.LectureRegService;
+
+import io.hhp.speciallecture.biz.Lecture.domain.Lecture;
+import io.hhp.speciallecture.biz.Lecture.repository.LectureRepository;
+import io.hhp.speciallecture.biz.LectureReg.domain.LectureReg;
+import io.hhp.speciallecture.biz.LectureReg.dto.LectureRegRequestDto;
+import io.hhp.speciallecture.biz.LectureReg.dto.LectureRegResponseDto;
+import io.hhp.speciallecture.biz.LectureReg.repository.LectureRegRepository;
+import io.hhp.speciallecture.biz.LectureReg.service.LectureRegService;
 import io.hhp.speciallecture.common.exception.LectureErrorResult;
 import io.hhp.speciallecture.common.exception.LectureException;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +18,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,6 +50,9 @@ public class LectureRegServiceTest {
         assertThat(lectureRegRepository).isNotNull();
     }
 
+    /*
+     * 특강 3월20일 ~ 4월28일 open
+     * */
     @DisplayName("[성공] 수강신청 성공")
     @Test()
     public void givenUserIdAndLectureId_whenRegisterForLecture_thenSuccessfullyRegister(){
@@ -60,7 +63,7 @@ public class LectureRegServiceTest {
         Optional<Lecture> lecture = Optional.of(Lecture.of("백엔드강의"
                 , "백엔드 능력을 배양하기 위한 강의"
                 , LocalDateTime.of(2024, 3, 20, 0, 0, 0)
-                , LocalDateTime.of(2024, 3, 28, 0, 0, 0)
+                , LocalDateTime.of(2024, 4, 28, 0, 0, 0)
                 ,10));
 
         LectureRegRequestDto lectureRegRequestDto = getLectureRegReqDto(userId, lectureId);
@@ -126,7 +129,7 @@ public class LectureRegServiceTest {
         Optional<Lecture> lecture = Optional.of(Lecture.of("백엔드강의"
                 , "백엔드 능력을 배양하기 위한 강의"
                 , LocalDateTime.of(2024, 3, 20, 0, 0, 0)
-                , LocalDateTime.of(2024, 3, 28, 0, 0, 0)
+                , LocalDateTime.of(2024, 4, 28, 0, 0, 0)
                 ,10));
         LectureRegRequestDto lectureRegRequestDto = getLectureRegReqDto(userId, lectureId);
 
@@ -158,7 +161,7 @@ public class LectureRegServiceTest {
         Optional<Lecture> lecture = Optional.of(Lecture.of("백엔드강의"
                 , "백엔드 능력을 배양하기 위한 강의"
                 , LocalDateTime.of(2024, 3, 20, 0, 0, 0)
-                , LocalDateTime.of(2024, 3, 28, 0, 0, 0)
+                , LocalDateTime.of(2024, 4, 28, 0, 0, 0)
                 ,30));
         LectureRegRequestDto lectureRegRequestDto = getLectureRegReqDto(userId, lectureId);
 
@@ -217,18 +220,14 @@ public class LectureRegServiceTest {
     public void givenUserId_whenGetRegisterForLectureByUserId_thenLectureRegList(){
         // given
         Long userId = 1L;
-
-        doReturn(List.of(
-                LectureReg.of(1L,userId),
-                LectureReg.of(2L,userId),
-                LectureReg.of(3L,userId)
-        )).when(lectureRegRepository).findByUserId(userId);
+        Long lectureId = 1L;
+        doReturn(Optional.of(LectureReg.of(lectureId,userId))).when(lectureRegRepository).findByUserIdAndLectureId(userId,lectureId);
 
         // when
-        List<LectureRegResponseDto> lectureRegList = lectureRegService.getRegisterForLectureByUserId(userId);
+        LectureRegResponseDto lectureReg = lectureRegService.checkIsRegisterForLectureByUserId(userId,lectureId);
 
         // then
-        assertThat(lectureRegList.size()).isEqualTo(3);
+        assertThat(lectureReg).isNotNull();
     }
 
     private LectureRegRequestDto getLectureRegReqDto(Long userId, Long lectureId){
